@@ -29,4 +29,5 @@ function(event, spot, case, name)
         SendChatMessage(aura_env.message , "WHISPER", nil, name)
         SendChatMessage(name..": "..aura_env.message , "SAY")
         return true
+    end
   end

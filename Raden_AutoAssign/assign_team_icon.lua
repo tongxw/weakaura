@@ -89,6 +89,5 @@ function()
   
   return aura_env.result
   
-  
-  
+
 end
