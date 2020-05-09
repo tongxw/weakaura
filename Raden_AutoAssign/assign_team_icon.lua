@@ -25,7 +25,6 @@ function()
               next = next-1
           end
           
-          
           if aura_env.number and aura_env.one and #aura_env.one >= next then
               if aura_env.one[next] == name then
                   aura_env.alerted = true
