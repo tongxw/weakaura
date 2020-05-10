@@ -25,8 +25,8 @@ function()
               next = next-1
           end
           
-          if aura_env.number and aura_env.one and #aura_env.one >= next then
-              if aura_env.one[next] == name then
+          if aura_env.one and #aura_env.one >= next then
+              if aura_env.number and aura_env.one[next] == name then
                   aura_env.alerted = true
                   if aura_env.type[aura_env.count] == "Void" or aura_env.type[aura_env.count] == "Nightmare" then
                       WeakAuras.ScanEvents("NS_RADEN_NEXT", aura_env.type[aura_env.count])
@@ -39,7 +39,7 @@ function()
                   end
               else
                 if aura_env.type[aura_env.count] == "Void" or aura_env.type[aura_env.count] == "Nightmare" then
-                  WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.one[next])
+                  WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], "", aura_env.one[next])
                 else
                   if next % 2 == 0 then
                       WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.marktwo[aura_env.vitacount], aura_env.one[next])
@@ -58,7 +58,7 @@ function()
           for i=1, max do
               aura_env.addtext = ""
               if UnitIsDead(aura_env.one[i]) then
-                  aura_env.addtext = "|cFF808080"..aura_env.one[i]
+                  aura_env.addtext = "[死]|cFF808080"..aura_env.one[i]
                   
               elseif WA_GetUnitAura(aura_env.one[i], aura_env.debuffs[aura_env.type[aura_env.count]], aura_env.debug) then
                   local expires = select(6, WA_GetUnitAura(aura_env.one[i], aura_env.debuffs[aura_env.type[aura_env.count]], aura_env.debug))
