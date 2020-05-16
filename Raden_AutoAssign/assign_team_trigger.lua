@@ -34,6 +34,7 @@ aura_take_effect = function(event, ...)
 
                                   -- send notificiation
                                   WeakAuras.ScanEvents("NS_RADEN_BACKUP_NOTIFY", i, aura_env.type[aura_env.count], aura_env.backup[j])
+                                  aura_env.number_backup = true
                                   break
                               end
                           else
@@ -46,6 +47,7 @@ aura_take_effect = function(event, ...)
 
                               -- send notificiation
                               WeakAuras.ScanEvents("NS_RADEN_BACKUP_NOTIFY", i, aura_env.type[aura_env.count], aura_env.backup[j])
+                              aura_env.number_backup = true
                               break
                           end 
                       end
@@ -75,6 +77,7 @@ aura_take_effect = function(event, ...)
               aura_env.go = false
               aura_env.starttime = GetTime()
               aura_env.alerted = false
+              aura_env.notify_alerted = false
               aura_env.assigned = {}
               aura_env.one = {}
               
@@ -101,6 +104,7 @@ aura_take_effect = function(event, ...)
                               if UnitIsUnit(aura_env.team[i], "player") then
                                   aura_env.number = true
                               end
+                              aura_env.number_backup = true
                           else
                               for j=1, #aura_env.backup do
                                   if not UnitIsDead(aura_env.backup[j]) 
@@ -118,6 +122,7 @@ aura_take_effect = function(event, ...)
                                                   aura_env.number = true
                                               end
                                               WeakAuras.ScanEvents("NS_RADEN_BACKUP_NOTIFY", i, aura_env.type[aura_env.count], aura_env.backup[j])
+                                              aura_env.number_backup = true
                                               break
                                           end
                                       else
@@ -128,6 +133,7 @@ aura_take_effect = function(event, ...)
                                               aura_env.number = true
                                           end
                                           WeakAuras.ScanEvents("NS_RADEN_BACKUP_NOTIFY", i, aura_env.type[aura_env.count], aura_env.backup[j])
+                                          aura_env.number_backup = true
                                           break
                                       end
                                   end
@@ -139,6 +145,7 @@ aura_take_effect = function(event, ...)
                           if UnitIsUnit(aura_env.team[i], "player") then
                               aura_env.number = true
                           end
+                          aura_env.number_backup = true
                       end
                   else
                       for j=1, #aura_env.backup do
@@ -157,6 +164,7 @@ aura_take_effect = function(event, ...)
                                           aura_env.number = true
                                       end
                                       WeakAuras.ScanEvents("NS_RADEN_BACKUP_NOTIFY", i, aura_env.type[aura_env.count], aura_env.backup[j])
+                                      aura_env.number_backup = true
                                       break
                                   end
                               else
@@ -167,6 +175,7 @@ aura_take_effect = function(event, ...)
                                       aura_env.number = true
                                   end
                                   WeakAuras.ScanEvents("NS_RADEN_BACKUP_NOTIFY", i, aura_env.type[aura_env.count], aura_env.backup[j])
+                                  aura_env.number_backup = true
                                   break
                               end
                           end 
@@ -213,7 +222,9 @@ aura_lose_effect = function(event, ...)
             aura_env.one = {}
             aura_env.vulnerable = {}
             aura_env.alerted = false
+            aura_env.notify_alerted = false
             aura_env.number = false
+            aura_env.number_backup = false
             aura_env.starttime = 0
             return true
         end
@@ -223,7 +234,9 @@ aura_lose_effect = function(event, ...)
             aura_env.one = {}
             aura_env.vulnerable = {}
             aura_env.alerted = false
+            aura_env.notify_alerted = false
             aura_env.number = false
+            aura_env.number_backup = false
             aura_env.count = 0
             aura_env.starttime = 0
             return true
@@ -237,7 +250,9 @@ aura_lose_effect = function(event, ...)
         aura_env.one = {}
         aura_env.vulnerable = {}
         aura_env.alerted = false
+        aura_env.notify_alerted = false
         aura_env.number = false
+        aura_env.number_backup = false
         aura_env.count = 0
         aura_env.starttime = 0
         return true
