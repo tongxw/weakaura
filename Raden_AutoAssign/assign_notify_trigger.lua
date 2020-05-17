@@ -19,17 +19,17 @@ function(event, spot, case, name)
         aura_env.message = ""
         if spot == "Vita" then
             if case then
-                aura_env.message = "下一棒传电 轮到你了！位置{rt"..case.."}，快就位！"
+                aura_env.message = "下一个传电轮到你了！位置{rt"..case.."}，快去就位！"
                 aura_env.iconid = case
             else
-                aura_env.message = "下一棒传电 轮到你了！"
+                aura_env.message = "下一个传电轮到你了！快去就位！"
                 aura_env.iconid = "8" -- skull by default
             end
         elseif spot == "Void" then
-            aura_env.message = "下一棒踩黑圈{rt3} 轮到你了！ 快就位！"
+            aura_env.message = "下一个踩黑圈{rt3}轮到你了！ 快去就位！"
             aura_env.iconid = "3"
         elseif spot == "Nightmare" then
-            aura_env.message = "下一棒传红圈{rt7} 轮到你了！ 靠近红圈！"
+            aura_env.message = "下一个传红圈{rt7}轮到你了！ 靠近红圈！"
             aura_env.iconid = "7"
         end
     end

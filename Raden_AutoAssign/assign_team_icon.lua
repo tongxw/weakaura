@@ -41,10 +41,10 @@ function()
                 end
             end
         end
-        
 
-        -- add notification
-        if not aura_env.notify_alerted and aura_env.number_backup ~= 0 and (GetTime()-aura_env.starttime) < 36 then
+        -- if not aura_env.notify_alerted and aura_env.number_backup ~= 0 and (GetTime()-aura_env.starttime) < 36 then
+        if aura_env.number_backup ~= 0 and (GetTime()-aura_env.starttime) < 36 then
+            -- get the next player index
             local cycle = aura_env.cycle
             if aura_env.type[aura_env.count] == "Nightmare" then
                 cycle = aura_env.cycle+0.4
@@ -53,26 +53,31 @@ function()
             if aura_env.type[aura_env.count] == "Void" then
                 next = next-1
             end
-            
-            
-            if aura_env.number_backup and aura_env.one and #aura_env.one >= next then
+
+            -- set alert flag to false if this player is not notified
+            if auro_env.next_player ~= aura_env.one[next] then
+                auro_env.next_player = auro_env.one[next]
+                auro_env.notify_alerted = false
+            end
+
+            if not aura_env.notify_alerted and aura_env.number_backup and aura_env.one and #aura_env.one >= next then
                 aura_env.notify_alerted = true -- do not repeat the notification
                 if aura_env.type[aura_env.count] == "Void" or aura_env.type[aura_env.count] == "Nightmare" then
-                    C_Timer.After(0.5, function()
-                        WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], "", aura_env.one[next])
-                    end)
-                    -- WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], "", aura_env.one[next])
+                    -- C_Timer.After(0.5, function()
+                    --     WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], "", aura_env.one[next])
+                    -- end)
+                    WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], "", aura_env.one[next])
                 else
                     if next % 2 == 0 then
-                        C_Timer.After(0.5, function()
-                            WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.marktwo[aura_env.vitacount], aura_env.one[next])
-                        end)
-                        -- WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.marktwo[aura_env.vitacount], aura_env.one[next])
+                        -- C_Timer.After(0.5, function()
+                        --     WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.marktwo[aura_env.vitacount], aura_env.one[next])
+                        -- end)
+                        WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.marktwo[aura_env.vitacount], aura_env.one[next])
                     else
-                        C_Timer.After(0.5, function()
-                            WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.markone[aura_env.vitacount], aura_env.one[next])
-                        end)
-                        -- WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.markone[aura_env.vitacount], aura_env.one[next])
+                        -- C_Timer.After(0.5, function()
+                        --     WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.markone[aura_env.vitacount], aura_env.one[next])
+                        -- end)
+                        WeakAuras.ScanEvents("NS_RADEN_NEXT_NOTIFY", aura_env.type[aura_env.count], aura_env.markone[aura_env.vitacount], aura_env.one[next])
                     end
                 end
             end
@@ -102,7 +107,7 @@ function()
                     local expires = select(6, WA_GetUnitAura(aura_env.one[i], aura_env.debuffs[aura_env.type[aura_env.count]], aura_env.debug))
                     local duration = Round(expires-GetTime())
                     aura_env.addtext = "|cFF00FF00"..aura_env.one[i].." - "..duration
-                -- show player name in read if they have vulnerable debuff
+                -- show player name in red if they have vulnerable debuff
                 elseif WA_GetUnitAura(aura_env.one[i], aura_env.vuln, aura_env.debug) then
                     local expires = select(6, WA_GetUnitAura(aura_env.one[i], aura_env.vuln, aura_env.debug))
                     local duration = Round(expires-GetTime())
@@ -121,7 +126,7 @@ function()
                 end
                 -- aura_env.result = aura_env.result.."\n"..aura_env.addtext
 
-                -- add order number at the first
+                -- add order number at the beginning of each line
                 local order = i
                 if aura_env.type[aura_env.count] == "Vita" then
                     order = order / 2
