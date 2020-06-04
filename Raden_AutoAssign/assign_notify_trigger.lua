@@ -5,11 +5,7 @@ function(event, spot, case, name)
     if event == "NS_RADEN_BACKUP_NOTIFY" then
         aura_env.message = ""
         if case == "Vita" then
-            local vitapos = "6" --circle
-            if case % 2 == 0 then
-                vitapos = "2" --square
-            end
-            aura_env.message = "请你准备替补: 传电 第 "..spot.." 棒 位置{rt" ..vitapos.."}"
+            aura_env.message = "请你准备替补: 传电 第 "..spot.." 棒"
         elseif case == "Void" then
             aura_env.message = "请你准备替补: 踩黑圈 第 "..spot.." 棒"
         elseif case == "Nightmare" then
@@ -29,16 +25,28 @@ function(event, spot, case, name)
             aura_env.message = "下一个踩黑圈{rt3}轮到你了！ 快去就位！"
             aura_env.iconid = "3"
         elseif spot == "Nightmare" then
-            aura_env.message = "下一个传红圈{rt7}轮到你了！ 靠近红圈！"
-            aura_env.iconid = "7"
+            if case == 1 then
+                aura_env.iconid = "5" -- moon
+            else
+                aura_env.iconid = "7" -- cross
+            aura_env.message = "下一个传红圈{rt"..aura_env.iconid.."}轮到你了！ 靠近红圈！"
+            end
         end
     end
 
     if aura_env.message ~= "" then
-        SendChatMessage(aura_env.message , "WHISPER", nil, name)
+        C_Timer.After(0.5, function()
+            SendChatMessage(aura_env.message , "WHISPER", nil, name)
+        end)
+
+        -- SendChatMessage(aura_env.message , "WHISPER", nil, name)
         if aura_env.iconid ~= "" then
-            SetRaidTarget(name, tonumber(aura_env.iconid))
+            C_Timer.After(0.5, function()
+                SetRaidTarget(name, tonumber(aura_env.iconid))
+            end)
+
+            -- SetRaidTarget(name, tonumber(aura_env.iconid))
         end
         return true
     end
-  end
+end

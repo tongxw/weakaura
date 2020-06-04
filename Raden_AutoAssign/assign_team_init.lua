@@ -1,4 +1,4 @@
-auro_env.next_player = ''
+aura_env.current = 0
 aura_env.cycle = 6
 aura_env.vitacount = 0
 aura_env.spells = { -- buff on boss
