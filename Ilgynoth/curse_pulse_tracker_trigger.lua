@@ -1,3 +1,5 @@
+events: CLEU:SPELL_DAMAGE:SPELL_MISSED:SPELL_AURA_REMOVED WA_CANCEL_PULSE
+
 function(states, event, ...)
     if event == "OPTIONS" then
         local sound = aura_env.config.sound
@@ -25,6 +27,7 @@ function(states, event, ...)
         if t[2] then
             if message == "SPELL_DAMAGE" and spellid == 316813 and destGUID == WeakAuras.myGUID then
                 --raw spell damage taken
+                C_ChatInfo.SendAddonMessage("ThermoosIlly", "off", "RAID")
                 if not states[""] or states[""].expirationTime - GetTime() <= 0.2 then
                     local sound = aura_env.config.sound
                     states[""] = {
@@ -43,6 +46,7 @@ function(states, event, ...)
                 end
             elseif message == "SPELL_MISSED" and spellid == 316813 and destGUID == WeakAuras.myGUID and arg1 == "ABSORB" then
                 --full spell damage absorbed
+                C_ChatInfo.SendAddonMessage("ThermoosIlly", "off", "RAID")
                 if not states[""] or states[""].expirationTime - GetTime() <= 0.2 then
                     local sound = aura_env.config.sound
                     states[""] = {
@@ -65,6 +69,7 @@ function(states, event, ...)
         if message == "SPELL_AURA_REMOVED" and spellid == 313759 and destGUID == WeakAuras.myGUID and states[""] then
             states[""].show = false
             states[""].changed = true
+            C_ChatInfo.SendAddonMessage("ThermoosIlly", "off", "RAID")
         end
         
     end
@@ -72,6 +77,7 @@ function(states, event, ...)
     if event == "WA_CANCEL_PULSE" and ... and states[""] then
         states[""].show = false
         states[""].changed = true
+        C_ChatInfo.SendAddonMessage("ThermoosIlly", "off", "RAID")
     end
     
     return true
